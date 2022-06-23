@@ -1,0 +1,225 @@
+﻿<Window x:Class="TesttingApp.Views.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TesttingApp.Views"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Тест"
+        MinHeight="450"
+        MinWidth="800">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto" />
+
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0"
+              x:Name="AdminMenu">
+
+            <MenuItem x:Name="MenuItemSettings"
+                      Header="Настройки"
+                      Click="MenuItem_Click" />
+
+            <MenuItem x:Name="MenuItemTests"
+                      Header="Добавить тест"
+                      Click="MenuItemTests_Click" />
+
+            <MenuItem x:Name="EditTestMenuItem"
+                      Header="Редактировать тест"
+                      Visibility="Collapsed"
+                      Click="EditTestMenuItem_Click"/>
+
+        </Menu>
+
+        <Grid Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="Auto" />
+
+                <ColumnDefinition />
+
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0"
+                        Margin="10">
+
+                <TextBlock Text="Тесты"
+                           Style="{DynamicResource MaterialDesignHeadline6TextBlock}"
+                           Margin="5" />
+
+                <ListView x:Name="ListViewTests"
+                          ItemsSource="{Binding Tests}"
+                          MinWidth="250"
+                          SelectionChanged="ListViewTests_SelectionChanged">
+
+                    <ListView.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <TextBlock Text="{Binding Title}" />
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+
+                </ListView>
+
+            </StackPanel>
+
+            <Grid Grid.Column="1"
+                  x:Name="GridTest"
+                  Visibility="Collapsed">
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto" />
+
+                    <RowDefinition Height="*" />
+
+                </Grid.RowDefinitions>
+
+                <StackPanel x:Name="StackPanelFields"
+                            Grid.Row="0"
+                            HorizontalAlignment="Center">
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBox x:Name="TextBoxName"
+                                 materialDesign:HintAssist.Hint="Имя"
+                                 MinWidth="250"
+                                 MinHeight="30"
+                                 VerticalContentAlignment="Center"
+                                 Margin="5" />
+
+                        <TextBox x:Name="TextBoxEmail"
+                                 materialDesign:HintAssist.Hint="E-Mail"
+                                 MinWidth="250"
+                                 MinHeight="30"
+                                 VerticalContentAlignment="Center"
+                                 Margin="5" />
+
+                    </StackPanel>
+
+                    <Button x:Name="ButtonStart"
+                            HorizontalAlignment="Center"
+                            Content="Начать"
+                            Margin="10"
+                            Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                            Click="ButtonStart_Click" />
+
+                </StackPanel>
+
+                <Grid Grid.Row="1"
+                      x:Name="GridTestField"
+                      Visibility="Collapsed">
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+
+                        <TextBlock x:Name="TextBlockQuestionTitle"
+                                   Style="{DynamicResource MaterialDesignHeadline3TextBlock}" />
+
+                        <Image x:Name="TestImage" />
+
+                    </StackPanel>
+
+                    <UniformGrid x:Name="UniformGridOneCorrect"
+                                 Grid.Row="1"
+                                 Rows="2"
+                                 Columns="2"
+                                 Visibility="Collapsed">
+
+                        <RadioButton x:Name="RadioButtonFirstAnswer"
+                                     Checked="RadioButton_Checked"
+                                     Unchecked="RadioButton_Unchecked"/>
+                        <RadioButton x:Name="RadioButtonSecondAnswer"
+                                     Checked="RadioButton_Checked"
+                                     Unchecked="RadioButton_Unchecked" />
+                        <RadioButton x:Name="RadioButtonThirdAnswer"
+                                     Checked="RadioButton_Checked"
+                                     Unchecked="RadioButton_Unchecked" />
+                        <RadioButton x:Name="RadioButtonFourthAnswer"
+                                     Checked="RadioButton_Checked"
+                                     Unchecked="RadioButton_Unchecked" />
+
+                    </UniformGrid>
+
+                    <UniformGrid x:Name="UniformGridManyCorrect"
+                                 Grid.Row="1"
+                                 Columns="2"
+                                 Rows="2"
+                                 Visibility="Collapsed">
+
+                        <CheckBox x:Name="CheckBoxFirstAnswer"
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Unchecked"/>
+                        <CheckBox x:Name="CheckBoxSecondAnswer"
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Unchecked" />
+                        <CheckBox x:Name="CheckBoxThirdAnswer"
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Unchecked" />
+                        <CheckBox x:Name="CheckBoxFourthAnswer"
+                                  Checked="CheckBox_Checked"
+                                  Unchecked="CheckBox_Unchecked" />
+
+                    </UniformGrid>
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Grid.Row="2">
+
+                        <StackPanel x:Name="StackPanelNavigationButtons"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    IsEnabled="True">
+
+                            <Button x:Name="ButtonPrevious"
+                                    HorizontalAlignment="Center"
+                                    Content="Предыдущий"
+                                    Margin="10"
+                                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                                    Click="ButtonPrevious_Click"/>
+
+                            <Button x:Name="ButtonNext"
+                                    HorizontalAlignment="Center"
+                                    Content="Следующий"
+                                    Margin="10"
+                                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                                    Click="ButtonNext_Click"/>
+
+                        </StackPanel>
+
+                        <Button x:Name="ButtonEnd"
+                                HorizontalAlignment="Center"
+                                Content="Завершить"
+                                Margin="10"
+                                Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                                Click="ButtonEnd_Click"/>
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

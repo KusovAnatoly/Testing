@@ -1,0 +1,151 @@
+﻿<Window x:Class="TesttingApp.Views.AddEditTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TesttingApp.Views"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Добавление теста"
+        MinHeight="450"
+        MinWidth="800">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto" />
+
+            <RowDefinition />
+
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="TextBoxTestName"
+                 materialDesign:HintAssist.Hint="Название теста"
+                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                 Grid.Row="0" />
+
+        <ListView x:Name="ListViewQuestions"
+                  Grid.Row="1">
+
+            <ListView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition />
+
+                            <RowDefinition />
+
+                            <RowDefinition />
+
+                            <RowDefinition />
+
+                            <RowDefinition />
+
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding Title}" />
+
+                        <TextBlock x:Name="TextBoxFirstQuestions"
+                                   Text="{Binding SpecialAnswers[0].Text}"
+                                   Grid.Row="1"
+                                   Grid.Column="0" />
+
+                        <TextBlock x:Name="TextBoxSecondQuestions"
+                                   Text="{Binding SpecialAnswers[1].Text}"
+                                   Grid.Row="2"
+                                   Grid.Column="0" />
+
+                        <TextBlock x:Name="TextBoxThirdQuestions"
+                                   Text="{Binding SpecialAnswers[2].Text}"
+                                   Grid.Row="3"
+                                   Grid.Column="0" />
+
+                        <TextBlock x:Name="TextBoxFourthQuestions"
+                                   Text="{Binding SpecialAnswers[3].Text}"
+                                   Grid.Row="4"
+                                   Grid.Column="0" />
+
+                        <CheckBox Grid.Row="1"
+                                  Grid.Column="1"
+                                  IsChecked="{Binding SpecialAnswers[0].IsCorrect}"
+                                  IsEnabled="False" />
+
+                        <CheckBox Grid.Row="2"
+                                  Grid.Column="1"
+                                  IsChecked="{Binding SpecialAnswers[1].IsCorrect}"
+                                  IsEnabled="False" />
+
+                        <CheckBox x:Name="CheckBox"
+                                  Grid.Row="3"
+                                  Grid.Column="1"
+                                  IsChecked="{Binding SpecialAnswers[2].IsCorrect}"
+                                  IsEnabled="False" />
+
+                        <CheckBox Grid.Row="4"
+                                  Grid.Column="1"
+                                  IsChecked="{Binding SpecialAnswers[3].IsCorrect}"
+                                  IsEnabled="False" />
+
+                    </Grid>
+
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+
+            <Button x:Name="ButtonSave"
+                    Content="Сохранить"
+                    HorizontalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    Click="ButtonSave_Click" />
+
+            <Button x:Name="ButtonAddQuestion"
+                    Content="Добавить вопрос"
+                    HorizontalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    Click="ButtonAddQuestion_Click" />
+
+            <Button x:Name="ButtonEditQuestion"
+                    Content="Изменить вопрос"
+                    HorizontalAlignment="Center"
+                    IsEnabled="False"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}" />
+
+            <Button x:Name="ButtonDeleteQuestion"
+                    Content="Удалить вопрос"
+                    IsEnabled="False"
+                    HorizontalAlignment="Center"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    Click="ButtonDeleteQuestion_Click" />
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
