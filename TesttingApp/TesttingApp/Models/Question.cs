@@ -16,6 +16,7 @@ namespace TesttingApp.Models
         public int TestId { get; set; }
         public string Text { get; set; } = null!;
         public byte[]? Image { get; set; }
+        public bool IsDeleted { get; set; }
 
         public virtual Test Test { get; set; } = null!;
         public virtual ICollection<Answer> Answers { get; set; }

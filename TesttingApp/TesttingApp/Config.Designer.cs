@@ -12,7 +12,7 @@ namespace TesttingApp {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     internal sealed partial class Config : global::System.Configuration.ApplicationSettingsBase {
         
         private static Config defaultInstance = ((Config)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Config())));
@@ -25,7 +25,7 @@ namespace TesttingApp {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=ipaddress;Database=TestingDatabase;User Id=USERNAME;Password=PASSWORD;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=.\\SQLEXPRESS;Database=TestingDatabase;Trusted_Connection=True;")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

@@ -12,8 +12,9 @@
     
     <StackPanel Margin="10">
 
-        <TextBox x:Name="TextBoxQuestionTitle"
-                 materialDesign:HintAssist.Hint="Вопрос"/>
+        <TextBox x:Name="TextBoxQuestionText"
+                 materialDesign:HintAssist.Hint="Вопрос"
+                 Margin="10"/>
 
         <StackPanel Orientation="Horizontal">
 
@@ -62,15 +63,21 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center">
 
-            <Button x:Name="ButtonAdd"
+            <Button x:Name="ButtonSave"
                     Style="{DynamicResource MaterialDesignFlatAccentButton}"
-                    Content="Добавить"
-                    Click="ButtonAdd_Click" />
+                    Content="Сохранить"
+                    Click="ButtonSave_Click" />
 
             <Button x:Name="ButtonAddPicture"
                     Style="{DynamicResource MaterialDesignFlatAccentButton}"
                     Content="Добавить изображение"
                     Click="ButtonAddPicture_Click" />
+
+            <Button x:Name="ButtonDeletePicture"
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    Content="Удалить изображение"
+                    Click="ButtonDeletePicture_Click" />
+            
         </StackPanel>
 
     </StackPanel>

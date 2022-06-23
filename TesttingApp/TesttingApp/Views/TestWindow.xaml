@@ -9,7 +9,12 @@
         Title="Тест"
         MinHeight="450"
         MinWidth="800">
-
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:TestWindow.MyCommand}"
+                        Executed="MyCommandExecuted" />
+    </Window.CommandBindings>
+    
     <Grid>
 
         <Grid.RowDefinitions>
@@ -21,20 +26,26 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0"
-              x:Name="AdminMenu">
+              x:Name="AdminMenu"
+              Visibility="Collapsed">
 
             <MenuItem x:Name="MenuItemSettings"
                       Header="Настройки"
                       Click="MenuItem_Click" />
 
-            <MenuItem x:Name="MenuItemTests"
+            <MenuItem x:Name="MenuItemAddTest"
                       Header="Добавить тест"
-                      Click="MenuItemTests_Click" />
+                      Click="MenuItemAddTest_Click" />
 
             <MenuItem x:Name="EditTestMenuItem"
                       Header="Редактировать тест"
                       Visibility="Collapsed"
                       Click="EditTestMenuItem_Click"/>
+
+            <MenuItem x:Name="DeleteTestMenuItme"
+                      Header="Удалить тест"
+                      Visibility="Collapsed"
+                      Click="DeleteTestMenuItme_Click"/>
 
         </Menu>
 

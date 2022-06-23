@@ -29,13 +29,14 @@
 
         </Grid.ColumnDefinitions>
 
-        <TextBox x:Name="TextBoxTestName"
+        <TextBox x:Name="TextBoxTestTitle"
                  materialDesign:HintAssist.Hint="Название теста"
                  Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                  Grid.Row="0" />
 
         <ListView x:Name="ListViewQuestions"
-                  Grid.Row="1">
+                  Grid.Row="1"
+                  SelectionChanged="ListViewQuestions_SelectionChanged">
 
             <ListView.ItemTemplate>
 
@@ -64,7 +65,8 @@
 
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{Binding Title}" />
+                        <TextBlock Text="{Binding Text}"
+                                   Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
 
                         <TextBlock x:Name="TextBoxFirstQuestions"
                                    Text="{Binding SpecialAnswers[0].Text}"
@@ -135,7 +137,8 @@
                     Content="Изменить вопрос"
                     HorizontalAlignment="Center"
                     IsEnabled="False"
-                    Style="{DynamicResource MaterialDesignFlatAccentButton}" />
+                    Style="{DynamicResource MaterialDesignFlatAccentButton}"
+                    Click="ButtonEditQuestion_Click" />
 
             <Button x:Name="ButtonDeleteQuestion"
                     Content="Удалить вопрос"

@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TesttingApp.Models;
@@ -24,6 +26,8 @@ namespace TesttingApp.Views
     /// </summary>
     public partial class TestWindow : Window
     {
+        public static RoutedCommand MyCommand = new RoutedCommand();
+
         public Test SelectedTest { get; set; }
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
@@ -37,26 +41,41 @@ namespace TesttingApp.Views
         public TestWindow()
         {
             InitializeComponent();
+            MyCommand.InputGestures.Add(new KeyGesture(Key.A, ModifierKeys.Control));
             LoadData();
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
             using (var db = new TestingDatabaseContext())
             {
-                Tests = new(db.Tests
+                Tests = new ObservableCollection<Test>(await db.Tests
+                    .Where(x => x.IsDeleted != true)
                     .Include(x => x.Questions)
                     .ThenInclude(x => x.Answers)
-                    .Include(x => x.Attempts));
+                    .Include(x => x.Attempts)
+                    .ToListAsync());
                 ListViewTests.ItemsSource = Tests;
             }
         }
 
         private void ListViewTests_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            SelectedTest = null!;
+            Questions = null!;
+            Question = null!;
+            _questionNumber = 0;
+            UncheckAllControls();
+            UserAnswers = new();
+            GridTest.Visibility = Visibility.Collapsed;
+            GridTestField.Visibility = Visibility.Collapsed;
+            StackPanelFields.IsEnabled = true;
+            TextBoxEmail.Text = String.Empty;
+            TextBoxName.Text = String.Empty;
             if (ListViewTests.SelectedItem != null && ListViewTests.SelectedIndex >= 0)
             {
                 EditTestMenuItem.Visibility = Visibility.Visible;
+                DeleteTestMenuItme.Visibility = Visibility.Visible;
                 SelectedTest = ListViewTests.SelectedItem as Test;
                 Questions = new(SelectedTest.Questions);
                 SetupQuestion();
@@ -68,7 +87,7 @@ namespace TesttingApp.Views
             }
             else
             {
-
+                DeleteTestMenuItme.Visibility = Visibility.Collapsed;
                 EditTestMenuItem.Visibility = Visibility.Collapsed;
             }
         }
@@ -263,17 +282,37 @@ namespace TesttingApp.Views
 
         private void EditTestMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            new AddEditTestWindow(SelectedTest.TestId).Show();
+            var test = ListViewTests.SelectedItem as Test;
+            new AddEditTestWindow(true, test.TestId).Show();
+            LoadData();
         }
 
-        private void MenuItemTests_Click(object sender, RoutedEventArgs e)
+        private void MenuItemAddTest_Click(object sender, RoutedEventArgs e)
         {
-            new AddEditTestWindow().Show();
+            new AddEditTestWindow(false).ShowDialog();
+            LoadData();
+        }
+
+        private void DeleteTestMenuItme_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new TestingDatabaseContext())
+            {
+
+                db.Tests.Find(SelectedTest.TestId).IsDeleted = true;
+                db.SaveChanges();
+                LoadData();
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             new SettingWindow().Show();
+            LoadData();
+        }
+
+        private void MyCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            AdminMenu.Visibility = AdminMenu.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
