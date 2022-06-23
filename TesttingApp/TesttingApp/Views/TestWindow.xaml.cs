@@ -97,11 +97,11 @@ namespace TesttingApp.Views
             Question = Questions[_questionNumber];
             Answers = new(Question.Answers);
             TextBlockQuestionTitle.Text = Question.Text;
-            try
+            if (Question.Image != null)
             {
-                TestImage.Source = (BitmapSource)new ImageSourceConverter().ConvertFrom(Question.Image);
+                TestImage.Source = ToImage(Question.Image);
             }
-            catch (Exception) { }
+
             if (Question.Answers.Count(x => x.IsCorrect == true) > 1)
             {
                 SetupManyAnswers();
@@ -111,7 +111,18 @@ namespace TesttingApp.Views
                 SetupOneAnswer();
             }
         }
-
+        public BitmapImage ToImage(byte[] array)
+        {
+            using (var ms = new System.IO.MemoryStream(array))
+            {
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.CacheOption = BitmapCacheOption.OnLoad; // here
+                image.StreamSource = ms;
+                image.EndInit();
+                return image;
+            }
+        }
         private void SetupOneAnswer()
         {
             UniformGridOneCorrect.Visibility = Visibility.Visible;

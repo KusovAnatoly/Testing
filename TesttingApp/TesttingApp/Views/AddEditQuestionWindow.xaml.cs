@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using TesttingApp.Models;
 
 namespace TesttingApp.Views
@@ -71,6 +72,7 @@ namespace TesttingApp.Views
                     {
                         var question = db.Questions.Include(x => x.Answers).First(x => x.QuestionId == Question.QuestionId);
                         question.Text = TextBoxQuestionText.Text;
+                        question.Image = _image;
                         question.Answers.First(x => x.AnswerId == Convert.ToInt32(TextBoxFirstAnswer.Tag)).Text = TextBoxFirstAnswer.Text;
                         question.Answers.First(x => x.AnswerId == Convert.ToInt32(TextBoxFirstAnswer.Tag)).IsCorrect = (bool)CheckBoxFirstAnswer.IsChecked;
                         question.Answers.First(x => x.AnswerId == Convert.ToInt32(TextBoxSecondAnswer.Tag)).Text = TextBoxSecondAnswer.Text;
@@ -85,6 +87,7 @@ namespace TesttingApp.Views
                     {
                         var question = new Question { Text = TextBoxQuestionText.Text};
                         question.Text = TextBoxQuestionText.Text;
+                        question.Image = _image;
                         question.Answers.Add(new Answer { IsCorrect = (bool)CheckBoxFirstAnswer.IsChecked, Text = TextBoxFirstAnswer.Text });
                         question.Answers.Add(new Answer { IsCorrect = (bool)CheckBoxSecondAnswer.IsChecked, Text = TextBoxSecondAnswer.Text });
                         question.Answers.Add(new Answer { IsCorrect = (bool)CheckBoxThirdAnswer.IsChecked, Text = TextBoxThirdAnswer.Text });
@@ -96,6 +99,7 @@ namespace TesttingApp.Views
                     else
                     {
                         Question.Text = TextBoxQuestionText.Text;
+                        Question.Image = _image;
                         Question.Answers.Add(new Answer { Text = TextBoxFirstAnswer.Text, IsCorrect = (bool)CheckBoxFirstAnswer.IsChecked });
                         Question.Answers.Add(new Answer { Text = TextBoxSecondAnswer.Text, IsCorrect = (bool)CheckBoxSecondAnswer.IsChecked });
                         Question.Answers.Add(new Answer { Text = TextBoxThirdAnswer.Text, IsCorrect = (bool)CheckBoxThirdAnswer.IsChecked });
@@ -123,10 +127,15 @@ namespace TesttingApp.Views
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog().Equals(true))
             {
-                FileStream imageStream = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read);
-
-                byte[] iBytes = new byte[imageStream.Length + 1];
-                return iBytes;
+                byte[] data;
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(new Uri(openFileDialog.FileName)));
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    encoder.Save(ms);
+                    data = ms.ToArray();
+                }
+                return data;
             }
             return null;
         }

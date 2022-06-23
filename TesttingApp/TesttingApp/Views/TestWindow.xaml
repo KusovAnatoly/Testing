@@ -145,7 +145,9 @@
                         <TextBlock x:Name="TextBlockQuestionTitle"
                                    Style="{DynamicResource MaterialDesignHeadline3TextBlock}" />
 
-                        <Image x:Name="TestImage" />
+                        <Image x:Name="TestImage"
+                               MaxHeight="250"
+                               MinWidth="350"/>
 
                     </StackPanel>
 

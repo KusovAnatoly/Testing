@@ -22,20 +22,6 @@ namespace TesttingApp.Views
         public SettingWindow()
         {
             InitializeComponent();
-            TextBoxConnectionString.Text = Config.Default.ConnectionString;
-            CheckBoxShowRightAnswer.IsChecked = Config.Default.ShowRightAnswer;
-        }
-
-        private void CheckBoxShowRightAnswer_Checked(object sender, RoutedEventArgs e)
-        {
-            Config.Default.ShowRightAnswer = CheckBoxShowRightAnswer.IsChecked == true;
-            Config.Default.Save();
-        }
-
-        private void CheckBoxShowRightAnswer_Unchecked(object sender, RoutedEventArgs e)
-        {
-            Config.Default.ShowRightAnswer = CheckBoxShowRightAnswer.IsChecked == true;
-            Config.Default.Save();
         }
     }
 }

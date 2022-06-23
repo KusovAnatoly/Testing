@@ -21,12 +21,6 @@
                  MinWidth="250"
                  Margin="25"/>
 
-        <CheckBox x:Name="CheckBoxShowRightAnswer"
-                  Content="Подсвечивать корректность ответа"
-                  Margin="25"
-                  Checked="CheckBoxShowRightAnswer_Checked"
-                  Unchecked="CheckBoxShowRightAnswer_Unchecked"/>
-
     </StackPanel>
     
 </Window>

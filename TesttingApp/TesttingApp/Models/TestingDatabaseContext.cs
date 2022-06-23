@@ -26,7 +26,10 @@ namespace TesttingApp.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(Config.Default.ConnectionString);
+                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=TestingDatabase;Trusted_Connection=True;", builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                });
             }
         }
 
